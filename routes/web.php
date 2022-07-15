@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ModeratorController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,12 +15,37 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', function () {
+        return redirect()->route('projects.index');
+    });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->middleware(['auth'])->name('dashboard');
+
+    Route::group(['middleware' => ['role:writer|admin']], function () {
+        Route::get('/test', function () {
+            return view('my.main');
+        });
+
+        Route::resources([
+            'projects' => ProjectController::class
+        ]);
+    });
+
+    Route::group([
+        'middleware' => ['role:admin'],
+        'prefix' => 'moderation/projects',
+        'as' => 'moderation.'
+    ], function () {
+        Route::get('/', [ModeratorController::class, 'index'])->name('index');
+        Route::get('/{project}', [ModeratorController::class, 'show'])->name('show');
+        Route::post('/{project}', [ModeratorController::class, 'moderate'])->name('moderate');
+        Route::delete('/{project}', [ModeratorController::class, 'delete'])->name('delete');
+
+    });
+
+});
 
 require __DIR__.'/auth.php';
