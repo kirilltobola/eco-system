@@ -6,18 +6,18 @@
 
 @section('content')
     <div class="card border-dark mb-3">
-        <div class="card-header">{{ $project->headline }}</div>
+        <div class="card-header">{{ $project->name}}</div>
         <div class="card-body text-dark">
             <h5 class="card-title">Описание</h5>
-            <p class="card-text">{!! $project->details !!}</p>
+            <p class="card-text">{!! $project->description !!}</p>
         </div>
 
         <div class="container m-2">
-            <span class="badge text-bg-success">{{ $project->categories()->get()[0]->name }}</span>
+            <span class="badge text-bg-success">{{ $project->category()->get()[0]->name }}</span>
         </div>
     </div>
 
-<form method="POST" action="{{ route('moderation.moderate', ['project' => $project->id]) }}">
+<form method="POST" action="{{ route('moderation.moderate', ['kaizen' => $project->id]) }}">
     @csrf
     <div class="container-fluid justify-content-center mx-auto mt-2" style="max-width: 50rem;">
         <form>
@@ -44,7 +44,7 @@
         </form>
 
         <div class="mb-3">
-            <form method="DELETE" action="{{ route('moderation.delete', ['project' => $project]) }}">
+            <form method="DELETE" action="{{ route('moderation.delete', ['kaizen' => $project]) }}">
                 @csrf
                 <button type="submit" class="btn btn-danger">Удалить</button>
             </form>

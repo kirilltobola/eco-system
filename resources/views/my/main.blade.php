@@ -12,7 +12,7 @@
                 <div class="card-header"></div>
                 <div class="card-body text-dark">
                     <h5 class="card-title">
-                        <a href="{{ route('projects.show', ['project' => $project->id]) }}">{{ $project->headline }}</a>
+                        <a href="{{ route('kaizens.show', ['kaizen' => $project->id]) }}">{{ $project->headline }}</a>
                     </h5>
                     <p class="card-text">
                         {!! $project->details !!}
@@ -27,7 +27,7 @@
         @endforeach
 
         <div class="m-3" style=" position: fixed; bottom: 0px; right: 0px;">
-            <a href="{{ route('projects.create') }}" type="button" class="btn btn-secondary btn-lg" style="color: orange;">Предложить</a>
+            <a href="{{ route('suggest') }}" type="button" class="btn btn-secondary btn-lg" style="color: orange;">Предложить</a>
         </div>
     </div>
 @endsection
