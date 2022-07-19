@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ModeratorController;
-use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\KaizenController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
-        return redirect()->route('projects.index');
+        return redirect()->route('kaizens.index');
     });
 
     Route::get('/dashboard', function () {
@@ -25,24 +25,24 @@ Route::middleware(['auth'])->group(function () {
     })->middleware(['auth'])->name('dashboard');
 
     Route::group(['middleware' => ['role:writer|admin']], function () {
-        Route::get('/test', function () {
-            return view('my.main');
-        });
+        Route::get('/suggest', function () {
+            return view('my.suggest');
+        })->name('suggest');
 
         Route::resources([
-            'projects' => ProjectController::class
+            'kaizens' => KaizenController::class
         ]);
     });
 
     Route::group([
         'middleware' => ['role:admin'],
-        'prefix' => 'moderation/projects',
+        'prefix' => 'moderation/kaizens',
         'as' => 'moderation.'
     ], function () {
         Route::get('/', [ModeratorController::class, 'index'])->name('index');
-        Route::get('/{project}', [ModeratorController::class, 'show'])->name('show');
-        Route::post('/{project}', [ModeratorController::class, 'moderate'])->name('moderate');
-        Route::delete('/{project}', [ModeratorController::class, 'delete'])->name('delete');
+        Route::get('/{kaizen}', [ModeratorController::class, 'show'])->name('show');
+        Route::post('/{kaizen}', [ModeratorController::class, 'moderate'])->name('moderate');
+        Route::delete('/{kaizen}', [ModeratorController::class, 'delete'])->name('delete');
 
     });
 
