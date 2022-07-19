@@ -12,15 +12,15 @@
                 <div class="card-header"></div>
                 <div class="card-body text-dark">
                     <h5 class="card-title">
-                        <a href="{{ route('kaizens.show', ['kaizen' => $project->id]) }}">{{ $project->headline }}</a>
+                        <a href="{{ route('kaizens.show', ['kaizen' => $project->id]) }}">{{ $project->name }}</a>
                     </h5>
                     <p class="card-text">
-                        {!! $project->details !!}
+                        {!! $project->description !!}
                     </p>
                 </div>
 
                 <div class="container m-2">
-                    <span class="badge text-bg-success">{{ $project->categories()->get()[0]->name }}</span>
+                    <span class="badge text-bg-success">{{ $project->category()->get()[0]->name }}</span>
                     <span class="badge text-bg-light">{{ $project->status()->get()[0]->name }}</span>
                 </div>
             </div>
