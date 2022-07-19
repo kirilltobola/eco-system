@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Kaizen;
 use App\Models\Project;
 use App\Models\Status;
 use App\Models\Theme;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class ProjectController extends Controller
+class KaizenController extends Controller
 {
 
     public function index(Request $reuqest)
@@ -17,7 +19,7 @@ class ProjectController extends Controller
         $theme = $reuqest->get('theme', 'ecology');
         $_theme = Theme::where('name', $theme)->get()[0];
 
-        $projects = Project::with('theme')
+        $projects = Kaizen::with('theme')
             ->where('theme_id', $_theme->id)
             ->where('published', true)
             ->get();
@@ -37,7 +39,6 @@ class ProjectController extends Controller
             'my.add_project_form',
             [
                 'themes' => Theme::all(),
-                'types' => Type::all(),
                 'categories' => Category::all(),
             ]
         );
@@ -46,28 +47,32 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
-        $project = Project::factory()->create([
-            'headline' => $request->headline,
-            'details' => $request->details,
+        /** @var Kaizen $kaizen */
+        $kaizen = Kaizen::factory()->create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'improvement' => $request->improvement,
         ]);
-        $project->type()->associate(Type::find($request->type));
-        $project->status()->associate(Status::find(1));
-        $project->categories()->save(Category::find($request->category));
+
+        $kaizen->category()->associate(Category::find($request->category));
         $theme = Theme::find($request->theme);
-        $project->theme()->associate($theme);
+        $kaizen->theme()->associate($theme);
 
-        $project->save();
+        $kaizen->status()->associate(Status::find(1));
 
-        return redirect()->route('projects.index');
+        $kaizen->users()->attach(Auth::id(), ['type' => Kaizen::AUTHOR]);
+        $kaizen->save();
+
+        return redirect()->route('kaizens.index');
     }
 
 
     public function show($id)
     {
         // TODO: use Project $project
-        /** @var Project $project */
-        $project = Project::find($id);
-        $category = $project->categories()->get()[0]->name;
+        /** @var Kaizen $project */
+        $project = Kaizen::find($id);
+        $category = $project->category()->get()[0]->name;
         $status = $project->status()->get()[0]->name;
 
         return view(

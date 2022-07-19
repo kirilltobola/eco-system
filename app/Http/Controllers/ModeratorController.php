@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kaizen;
 use App\Models\Project;
 use App\Models\Status;
 use Illuminate\Http\Request;
@@ -10,18 +11,18 @@ class ModeratorController extends Controller
 {
     public function index()
     {
-        $projects = Project::where('published', false)->get();
+        $kaizens = Kaizen::where('published', false)->get();
 
         return view(
             'my.moderator.index',
-            ['projects' => $projects]
+            ['kaizens' => $kaizens]
         );
     }
 
     public function show($id)
     {
-        /** @var Project $project */
-        $project = Project::find($id);
+        /** @var Kaizen $project */
+        $project = Kaizen::find($id);
         $statuses = Status::all();
 
         return view(
@@ -35,8 +36,10 @@ class ModeratorController extends Controller
 
     public function moderate(Request $request, $id)
     {
-        /** @var Project $project */
-        $project = Project::find($id);
+        return 'Не готово';
+
+        /** @var Kaizen $project */
+        $project = Kaizen::find($id);
         $status = $request->status;
         $realization_description = $request->realization_description;
 
