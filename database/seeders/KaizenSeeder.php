@@ -19,31 +19,60 @@ class KaizenSeeder extends Seeder
      */
     public function run()
     {
-        /** @var Kaizen $kaizen */
-        $kaizen = Kaizen::create([
-            'name' => 'name',
-            'description' => 'desc',
-            'improvement' => 'imp',
-            'result' => 'res',
-            'reference_number' => 123
-        ]);
+        for ($i = 1; $i < 4; $i++) {
+            /** @var Kaizen $kaizen */
+            $kaizen = Kaizen::create([
+                'name' => 'Название'.$i,
+                'description' => 'Описание'.$i,
+                'improvement' => 'Улучшение',
+                'result' => 'Результат',
+                'reference_number' => $i
+            ]);
 
-        /** @var Theme $theme */
-        $theme = Theme::find(1);
-        $kaizen->theme()->associate($theme);
+            /** @var Theme $theme */
+            $theme = Theme::find($i);
+            $kaizen->theme()->associate($theme);
 
-        /** @var Category $category */
-        $category = Category::find(1);
-        $kaizen->category()->associate($category);
+            /** @var Category $category */
+            $category = Category::find(1);
+            $kaizen->category()->associate($category);
 
-        /** @var Status $status */
-        $status = Status::find(1);
-        $kaizen->status()->associate($status);
+            /** @var Status $status */
+            $status = Status::find(1);
+            $kaizen->status()->associate($status);
 
-        $user = User::find(1);
-        $kaizen->users()->attach($user->id, ['type' => Kaizen::AUTHOR]);
+            $user = User::find(1);
+            $kaizen->users()->attach($user->id, ['type' => Kaizen::AUTHOR]);
 
+            $kaizen->published = true;
+            $kaizen->save();
+        }
 
-        $kaizen->save();
+//        /** @var Kaizen $kaizen */
+//        $kaizen = Kaizen::create([
+//            'name' => 'name',
+//            'description' => 'desc',
+//            'improvement' => 'imp',
+//            'result' => 'res',
+//            'reference_number' => 123
+//        ]);
+//
+//        /** @var Theme $theme */
+//        $theme = Theme::find(1);
+//        $kaizen->theme()->associate($theme);
+//
+//        /** @var Category $category */
+//        $category = Category::find(1);
+//        $kaizen->category()->associate($category);
+//
+//        /** @var Status $status */
+//        $status = Status::find(1);
+//        $kaizen->status()->associate($status);
+//
+//        $user = User::find(1);
+//        $kaizen->users()->attach($user->id, ['type' => Kaizen::AUTHOR]);
+//
+//        $kaizen->published = true;
+//        $kaizen->save();
     }
 }
