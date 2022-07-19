@@ -6,17 +6,13 @@
 
 @section('content')
 <div class="card border-dark mb-3">
-    <div class="card-header">{{ $project->headline }}</div>
+    <div class="card-header">{{ $project->name }}</div>
     <div class="card-body text-dark">
         <h5 class="card-title">Описание</h5>
         <p class="card-text">
-            {!! $project->details !!}
+            {!! $project->description !!}
         </p>
 
-        <h5 class="card-title">Описание реализации</h5>
-        <p class="card-text">
-            {!! $project->realization_description !!}
-        </p>
     </div>
 
     <div class="container m-2">
