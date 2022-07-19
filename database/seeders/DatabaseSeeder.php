@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
             TypeSeeder::class,
             ThemeSeeder::class,
 
-            ProjectSeeder::class
+            ProjectSeeder::class,
+            KaizenSeeder::class
         ]);
     }
 }
