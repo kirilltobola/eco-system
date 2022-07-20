@@ -8,17 +8,49 @@
 <div class="card border-dark mb-3">
     <div class="card-header">{{ $project->name }}</div>
     <div class="card-body text-dark">
-        <h5 class="card-title">Описание</h5>
-        <p class="card-text">
-            {!! $project->description !!}
-        </p>
+        <h5 class="card-title">Регистрационный номер</h5>
+        <h5 class="card-title">{{ $project->id }}</h5>
 
+        <h5 class="card-title">Описание ситуации до кайзена</h5>
+        <p class="card-text">{!! $project->description !!}</p>
+
+        <h5 class="card-title">Предлагаемое улучшение</h5>
+        <p class="card-text">{!! $project->improvement !!}</p>
+
+        <h5 class="card-title">Результаты от внедрения кайзена</h5>
+        <p class="card-text">{!! $project->result !!}</p>
+
+        <h5 class="card-title">Авторы</h5>
+        @foreach($project->authors()->get() as $author)
+            <p class="card-text">{{ $author }}</p>
+        @endforeach
+
+        <h5 class="card-title">Группа внедрения</h5>
+        @if(sizeof($project->implementationGroup()->get()) == 0)
+            <p class="card-text">Отсутсвует</p>
+        @endif
+        @foreach($project->implementationGroup()->get() as $person)
+            <p class="card-text">{{ $person }}</p>
+        @endforeach
+
+        <h5 class="card-title">Руководитель</h5>
+        @if(sizeof($project->manager()->get()) == 0)
+            <p class="card-text">Отсутсвует</p>
+        @else
+            <p class="card-text">{{ $project->manager()->get()[0] }}</p>
+        @endif
+
+        <h5 class="card-title">Специалист отдела БС</h5>
+        @if(sizeof($project->bsSpecialist()->get()) == 0)
+            <p class="card-text">Отсутсвует</p>
+        @else
+            <p class="card-text">{{ $project->bsSpecialist()->get() }}</p>
+        @endif
     </div>
 
     <div class="container m-2">
-
-
-        <span class="badge text-bg-success">{{ $category }}</span>
+        {{--    dont like    --}}
+        <span @if($category == 'Проблема') class="badge text-bg-danger" @else class="badge text-bg-success" @endif >{{ $category }}</span>
         <span class="badge text-bg-light">{{ $status }}</span>
 
         <div class="container mt-3">
@@ -32,18 +64,17 @@
         </div>
     </div>
 </div>
-</div>
 
 <div class="container-fluid justify-content-center mx-auto mt-2" style="max-width: 100rem;">
     <div class="row d-flex justify-content-center">
-        <div class="col-md-8 col-lg-6">
+        <div class="container">
             <div class="card shadow-0 border" style="background-color: #f0f2f5;">
-
-                <div class="card-body p-4">
-
+                <div class="card-body p-2">
                     <div class="input-group mb-4">
                         <input type="text" class="form-control" id="addANote" placeholder="Комментарий...">
-                        <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" style="color: orange;">Отправить</button>
+                        <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" style="color: orange;">
+                            Отправить
+                        </button>
                     </div>
 
                     <div class="card mb-4">
@@ -64,9 +95,7 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
-
             </div>
         </div>
     </div>

@@ -23,49 +23,46 @@ class PermissionsSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // create permissions
-        Permission::create(['name' => 'edit articles']);
-        Permission::create(['name' => 'delete articles']);
-        Permission::create(['name' => 'publish articles']);
-        Permission::create(['name' => 'unpublish articles']);
+        Permission::create(['name' => 'edit projects']);
+        Permission::create(['name' => 'delete projects']);
+        Permission::create(['name' => 'create projects']);
+        Permission::create(['name' => 'update projects']);
+        Permission::create(['name' => 'publish projects']);
+        Permission::create(['name' => 'moderate projects']);
 
         // create roles and assign existing permissions
-        $role1 = Role::create(['name' => 'writer']);
-        $role1->givePermissionTo('edit articles');
-        $role1->givePermissionTo('delete articles');
+        $roleUser = Role::create(['name' => 'user']);
+        $roleUser->givePermissionTo('create projects');
 
-        $role2 = Role::create(['name' => 'admin']);
-        $role2->givePermissionTo('publish articles');
-        $role2->givePermissionTo('unpublish articles');
+        $roleModerator = Role::create(['name' => 'moderator']);
+        $roleModerator->givePermissionTo('create projects');
+        $roleModerator->givePermissionTo('edit projects');
+        $roleModerator->givePermissionTo('delete projects');
+        $roleModerator->givePermissionTo('update projects');
+        $roleModerator->givePermissionTo('publish projects');
+        $roleModerator->givePermissionTo('moderate projects');
 
-        $role3 = Role::create(['name' => 'Super-Admin']);
+        //$roleSuperUser = Role::create(['name' => 'Super-Admin']);
         // gets all permissions via Gate::before rule; see AuthServiceProvider
 
-        // create demo users
+        // User
         $user = User::factory()->create([
-            'name' => 'Example User',
-            'first_name' => 'Example User',
-            'last_name' => 'Example User',
+            'name' => 'user',
+            'first_name' => 'Иван',
+            'last_name' => 'Иванов',
             'email' => 'test@example.com',
             'password' => Hash::make('password'),
         ]);
-        $user->assignRole($role1);
+        $user->assignRole($roleUser);
 
+        // Moderator
         $user = User::factory()->create([
-            'name' => 'Example Admin User',
-            'first_name' => 'Example User',
-            'last_name' => 'Example User',
+            'name' => 'moderator',
+            'first_name' => 'Анна',
+            'last_name' => 'Петрова',
             'email' => 'admin@example.com',
             'password' => Hash::make('password'),
         ]);
-        $user->assignRole($role2);
-
-        $user = User::factory()->create([
-            'name' => 'Example Super-Admin User',
-            'first_name' => 'Example User',
-            'last_name' => 'Example User',
-            'email' => 'superadmin@example.com',
-            'password' => Hash::make('password'),
-        ]);
-        $user->assignRole($role3);
+        $user->assignRole($roleModerator);
     }
 }

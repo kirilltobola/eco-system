@@ -22,20 +22,21 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', function () {
         return view('dashboard');
-    })->middleware(['auth'])->name('dashboard');
+    })->name('dashboard');
 
-    Route::group(['middleware' => ['role:writer|admin']], function () {
+    Route::group(['middleware' => ['role:user|moderator']], function () {
         Route::get('/suggest', function () {
             return view('my.suggest');
         })->name('suggest');
 
+        // seems wrong? or not?
         Route::resources([
             'kaizens' => KaizenController::class
         ]);
     });
 
     Route::group([
-        'middleware' => ['role:admin'],
+        'middleware' => ['role:moderator'],
         'prefix' => 'moderation/kaizens',
         'as' => 'moderation.'
     ], function () {
