@@ -36,16 +36,15 @@ class ModeratorController extends Controller
 
     public function moderate(Request $request, $id)
     {
-        return 'Не готово';
+        $request->validate([
+            'status' => ['required'],
+        ]);
 
         /** @var Kaizen $project */
         $project = Kaizen::find($id);
         $status = $request->status;
-        $realization_description = $request->realization_description;
-
         $project->published = true;
         $project->status()->associate($status);
-        $project->realization_description = $realization_description;
         $project->save();
 
         return redirect()->route('moderation.index');
@@ -53,6 +52,6 @@ class ModeratorController extends Controller
 
     public function delete(Request $request)
     {
-
+        return "TODO";
     }
 }

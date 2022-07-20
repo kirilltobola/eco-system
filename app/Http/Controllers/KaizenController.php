@@ -19,7 +19,7 @@ class KaizenController extends Controller
         $theme = $reuqest->get('theme', 'ecology');
         $_theme = Theme::where('name', $theme)->get()[0];
 
-        $projects = Kaizen::with('theme')
+        $kaizens = Kaizen::with('theme')
             ->where('theme_id', $_theme->id)
             ->where('published', true)
             ->get();
@@ -27,7 +27,7 @@ class KaizenController extends Controller
         return view(
             'my.main',
             [
-                'projects' => $projects,
+                'kaizens' => $kaizens,
                 'theme' => $theme,
             ]
         );
@@ -47,6 +47,16 @@ class KaizenController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => ['required'],
+            'description' => ['required'],
+            'improvement' => ['required'],
+            'theme' => ['required'],
+            'category' => ['required'],
+        ]);
+
+
+
         /** @var Kaizen $kaizen */
         $kaizen = Kaizen::factory()->create([
             'name' => $request->name,
@@ -58,7 +68,7 @@ class KaizenController extends Controller
         $theme = Theme::find($request->theme);
         $kaizen->theme()->associate($theme);
 
-        $kaizen->status()->associate(Status::find(1));
+        // $kaizen->status()->associate(Status::find(1));
 
         $kaizen->users()->attach(Auth::id(), ['type' => Kaizen::AUTHOR]);
         $kaizen->save();
