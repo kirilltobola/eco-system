@@ -10,8 +10,12 @@
 
         <div class="mb-3">
             <label for="name" class="form-label">Название кайзена</label>
-            <input type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp">
+            <input value="{{ old('name') }}" type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp">
             <div id="nameHelp" class="form-text">Опишите проект одним предложением</div>
+
+            @error('name')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="mb-3">
@@ -22,6 +26,10 @@
                     <option value="{{ $theme->id }}">{{ $theme->name }}</option>
                 @endforeach
             </select>
+
+            @error('theme')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="mb-3">
@@ -32,20 +40,32 @@
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
             </select>
+
+            @error('category')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="mb-3">
             <label for="editor" class="form-label">Описание ситуации до кайзена</label>
             <!-- Create the editor container -->
-            <div id="editor" style="min-height: 20rem;"></div>
-            <textarea id="description" name="description" style="display: none"></textarea>
+            <div id="editor" style="min-height: 20rem;">{!! old('description') !!}</div>
+            <textarea id="description" name="description" style="display: none">{!! old('description') !!}</textarea>
+
+            @error('description')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="mb-3">
             <label for="editor1" class="form-label">Предлагаемое улучшение</label>
             <!-- Create the editor container -->
-            <div id="editor1" style="min-height: 20rem;"></div>
-            <textarea id="improvement" name="improvement" style="display: none"></textarea>
+            <div id="editor1" style="min-height: 20rem;">{!! old('improvement') !!}</div>
+            <textarea id="improvement" name="improvement" style="display: none">{!! old('improvement') !!}</textarea>
+
+            @error('improvement')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="mb-3">

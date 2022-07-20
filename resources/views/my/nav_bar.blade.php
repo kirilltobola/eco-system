@@ -9,7 +9,10 @@
             <a class="navbar-brand" href="{{ route('kaizens.index', ['theme' => 'ecology']) }}">Экология</a>
             <a class="navbar-brand" href="{{ route('kaizens.index', ['theme' => 'digital']) }}">Цифровизация</a>
             <a class="navbar-brand" href="{{ route('kaizens.index', ['theme' => 'ot']) }}">ОТ</a>
-            <a class="navbar-brand" href="{{ route('moderation.index') }}">Модерация</a>
+
+            @can('moderate projects')
+                <a class="navbar-brand" href="{{ route('moderation.index') }}">Модерация</a>
+            @endcan
         </div>
 
         <form class="d-flex" role="search">

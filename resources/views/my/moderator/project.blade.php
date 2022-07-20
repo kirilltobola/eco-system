@@ -6,10 +6,46 @@
 
 @section('content')
     <div class="card border-dark mb-3">
-        <div class="card-header">{{ $project->name}}</div>
+        <div class="card-header">{{ $project->name }}</div>
         <div class="card-body text-dark">
-            <h5 class="card-title">Описание</h5>
+            <h5 class="card-title">Регистрационный номер</h5>
+            <h5 class="card-title">{{ $project->id }}</h5>
+
+            <h5 class="card-title">Описание ситуации до кайзена</h5>
             <p class="card-text">{!! $project->description !!}</p>
+
+            <h5 class="card-title">Предлагаемое улучшение</h5>
+            <p class="card-text">{!! $project->improvement !!}</p>
+
+            <h5 class="card-title">Результаты от внедрения кайзена</h5>
+            <p class="card-text">{!! $project->result !!}</p>
+
+            <h5 class="card-title">Авторы</h5>
+            @foreach($project->authors()->get() as $author)
+                <p class="card-text">{{ $author }}</p>
+            @endforeach
+
+            <h5 class="card-title">Группа внедрения</h5>
+            @if(sizeof($project->implementationGroup()->get()) == 0)
+                <p class="card-text">Отсутсвует</p>
+            @endif
+            @foreach($project->implementationGroup()->get() as $person)
+                <p class="card-text">{{ $person }}</p>
+            @endforeach
+
+            <h5 class="card-title">Руководитель</h5>
+            @if(sizeof($project->manager()->get()) == 0)
+                <p class="card-text">Отсутсвует</p>
+            @else
+                <p class="card-text">{{ $project->manager()->get() }}</p>
+            @endif
+
+            <h5 class="card-title">Специалист отдела БС</h5>
+                @if(sizeof($project->manager()->get()) == 0)
+                    <p class="card-text">Отсутсвует</p>
+                @else
+                    <p class="card-text">{{ $project->bsSpecialist()->get() }}</p>
+                @endif
         </div>
 
         <div class="container m-2">
@@ -19,8 +55,9 @@
 
 <form method="POST" action="{{ route('moderation.moderate', ['kaizen' => $project->id]) }}">
     @csrf
+
     <div class="container-fluid justify-content-center mx-auto mt-2" style="max-width: 50rem;">
-        <form>
+
             <div class="mb-3">
                 <label for="status" class="form-label">Статус</label>
                 <select id="status" name="status" class="form-select" aria-label="Default select example">
@@ -29,40 +66,22 @@
                         <option value="{{ $status->id }}">{{ $status->name }}</option>
                     @endforeach
                 </select>
-            </div>
-
-            <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Описание реализации</label>
-                <!-- Create the editor container -->
-                <div id="editor" style="min-height: 20rem;"></div>
-                <textarea id="realization_description" name="realization_description" style="display: none"></textarea>
+                @error('status')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="mb-3">
                 <button type="submit" class="btn btn-secondary" style="color: orange;">Опубликовать</button>
             </div>
-        </form>
+
 
         <div class="mb-3">
             <form method="DELETE" action="{{ route('moderation.delete', ['kaizen' => $project]) }}">
                 @csrf
-                <button type="submit" class="btn btn-danger">Удалить</button>
+                <button type="submit" class="btn btn-danger" disabled>Удалить</button>
             </form>
         </div>
     </div>
 </form>
-
-<!-- Include the Quill library -->
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-
-<!-- Initialize Quill editor -->
-<script>
-    let quill = new Quill('#editor', {
-        theme: 'snow'
-    });
-
-    quill.on('text-change', function (delta, oldDelta, source) {
-        document.getElementById('realization_description').innerText = (document.getElementById('editor').querySelector('.ql-editor').innerHTML);
-    });
-</script>
 @endsection
