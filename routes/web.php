@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ModeratorController;
 use App\Http\Controllers\KaizenController;
+use App\Http\Controllers\VoteController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +26,7 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
+    // For what middleware? its already auth!
     Route::group(['middleware' => ['role:user|moderator']], function () {
         Route::get('/suggest', function () {
             return view('my.suggest');
@@ -31,8 +34,17 @@ Route::middleware(['auth'])->group(function () {
 
         // seems wrong? or not?
         Route::resources([
-            'kaizens' => KaizenController::class
+            'kaizens' => KaizenController::class,
+            'votes' => VoteController::class,
         ]);
+
+        Route::post('/votes/{vote}/vote', function (\Illuminate\Http\Request $request) {
+            $choice_id = $request['choice'];
+            /** @var \App\Models\Choice $choice */
+            $choice = \App\Models\Choice::find($choice_id);
+            $choice->users()->attach(Auth::user()->id);
+            $choice->save();
+        })->name('votes.vote');
     });
 
     Route::group([

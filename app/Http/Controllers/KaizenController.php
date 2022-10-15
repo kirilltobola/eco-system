@@ -55,8 +55,6 @@ class KaizenController extends Controller
             'category' => ['required'],
         ]);
 
-
-
         /** @var Kaizen $kaizen */
         $kaizen = Kaizen::factory()->create([
             'name' => $request->name,
