@@ -59,4 +59,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Project::class);
     }
+
+    public function votes()
+    {
+        return $this->hasMany(Vote::class, 'owner_id');
+    }
+
+    public function choices()
+    {
+        return $this->hasMany(Choice::class);
+    }
 }
