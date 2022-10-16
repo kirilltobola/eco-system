@@ -32,19 +32,55 @@ Route::middleware(['auth'])->group(function () {
             return view('my.suggest');
         })->name('suggest');
 
+        Route::get('votes/choose', function () {
+            return view('my.vote.choose');
+        })->name('votes.choose');
+
+        Route::get('/petitions', function () {
+            /** @var \App\Models\Vote $petitions */
+//            $petitions = Auth::user()->votes()->where('type', '=', 'petition')->get();
+
+            $petitions = Auth::user()->votes()->where('type', '=', 'petition')->get();
+            $my_petitions = Auth::user()->my_votes()->where('type', '=', 'petition')->get();
+            return view(
+                'my.vote.index',
+                [
+                    'votes' => $petitions->mergeRecursive($my_petitions),
+                    'petition' => true
+                ]
+            );
+        })->name('petitions.index');
+
+        Route::get('petitions/create', function () {
+            $users = \App\Models\User::where('id', '!=', Auth::user()->id)->get();
+
+            return view(
+                'my.vote.create-petition',
+                ['users' => $users]
+            );
+        })->name('petitions.create');
+
         // seems wrong? or not?
         Route::resources([
             'kaizens' => KaizenController::class,
             'votes' => VoteController::class,
         ]);
 
-        Route::post('/votes/{vote}/vote', function (\Illuminate\Http\Request $request) {
+
+        Route::post('/votes/{vote}/vote', function (\Illuminate\Http\Request $request, $vote) {
             $choice_id = $request['choice'];
             /** @var \App\Models\Choice $choice */
             $choice = \App\Models\Choice::find($choice_id);
             $choice->users()->attach(Auth::user()->id);
             $choice->save();
+            return redirect()->route('votes.choose');
         })->name('votes.vote');
+
+
+        Route::get('votes/{vote}/results', function (\Illuminate\Http\Request $request, $vote) {
+            $obj = \App\Models\Vote::find($vote);
+            return view('my.vote.results', ['vote' => $obj]);
+        })->name('votes.results');
     });
 
     Route::group([

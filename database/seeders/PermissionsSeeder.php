@@ -64,5 +64,15 @@ class PermissionsSeeder extends Seeder
             'password' => Hash::make('password'),
         ]);
         $user->assignRole($roleModerator);
+
+        // Moderator
+        $user = User::factory()->create([
+            'name' => 'victor',
+            'first_name' => 'Виктор',
+            'last_name' => 'Петров',
+            'email' => 'm@m.ru',
+            'password' => Hash::make('password'),
+        ]);
+        $user->assignRole($roleModerator);
     }
 }

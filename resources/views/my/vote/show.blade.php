@@ -31,10 +31,17 @@
                     @endforeach
                 @endif
 
-                <button class="btn btn-success" @if($selected_choice != null) disabled @endif type="submit">Add</button>
-                @if($vote->owner()->first()->id == Auth::user()->id)
-                    <a type="button" href="#" class="btn btn-dark">Посмотреть результаты</a>
-                @endif
+                <div class="mt-2">
+                    <button class="btn btn-success" @if($selected_choice != null) disabled @endif type="submit">
+                        Проголосовать
+                    </button>
+                </div>
+
+                <div class="mt-3">
+                    @if($vote->owner()->first()->id == Auth::user()->id)
+                        <a type="button" href="{{ route('votes.results', ['vote' => $vote->id]) }}" class="btn btn-dark ml-3">Посмотреть результаты</a>
+                    @endif
+                </div>
             </form>
         </div>
 @endsection

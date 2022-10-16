@@ -65,6 +65,10 @@ class User extends Authenticatable
         return $this->hasMany(Vote::class, 'owner_id');
     }
 
+    public function my_votes() {
+        return $this->belongsToMany(Vote::class,  'user_vote');
+    }
+
     public function choices()
     {
         return $this->hasMany(Choice::class);

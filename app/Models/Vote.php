@@ -10,7 +10,8 @@ class Vote extends Model
     use HasFactory;
 
     protected $fillable = [
-        'thesis'
+        'thesis',
+        'type'
     ];
 
     public function owner()
