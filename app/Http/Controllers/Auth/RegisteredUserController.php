@@ -51,7 +51,7 @@ class RegisteredUserController extends Controller
         ]);
 
         // TODO: rename role-name
-        $user->assignRole(Role::findByName('admin'));
+        $user->assignRole(Role::findByName('moderator'));
 
         event(new Registered($user));
 
