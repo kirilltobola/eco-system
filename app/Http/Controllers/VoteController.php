@@ -16,12 +16,13 @@ class VoteController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
-        $votes = $user->votes()->get();
-        # dd($votes);
+
+        $votes = $user->votes()->where('type', '=', 'vote')->get();
+        $my_votes = $user->my_votes()->where('type', '=', 'vote')->get();
 
         return view(
             'my.vote.index',
-            ['votes' => $votes]
+            ['votes' => $votes->mergeRecursive($my_votes), 'petition' => false]
         );
     }
 
@@ -41,11 +42,13 @@ class VoteController extends Controller
     public function store(Request $request)
     {
         $thesis = $request->get('thesis');
+        $type = $request->get('type');
         $data = $request->except('_token', 'thesis');
 
         /** @var Vote $vote */
         $vote = Vote::factory()->create([
-            'thesis' => $thesis
+            'thesis' => $thesis,
+            'type' => $type
         ]);
         $vote->owner()->associate(Auth::user());
         $vote->save();
@@ -64,6 +67,13 @@ class VoteController extends Controller
             }
         }
         $vote->save();
+
+        if ($type == 'vote') {
+            return redirect()->route('votes.index');
+        } else {
+            return redirect()->route('petitions.index');
+        }
+
     }
 
     public function show($id)

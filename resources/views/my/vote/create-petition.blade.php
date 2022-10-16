@@ -8,12 +8,11 @@
     <form class="form-control" method="POST" action="{{ route('votes.store') }}">
         @csrf
 
-        <input type="hidden" name="type" value="vote">
+        <input type="hidden" name="type" value="petition">
 
         <div class="mb-3" id="test">
-            <label for="thesis" class="form-label">Тема голосования</label>
+            <label for="thesis" class="form-label">Тема петиции</label>
             <input value="{{ old('thesis') }}" type="text" class="form-control" id="thesis" name="thesis" aria-describedby="nameHelp">
-{{--            <div id="nameHelp" class="form-text">Опишите голосование</div>--}}
 
             @error('thesis')
                 <div class="alert alert-danger">{{ $message }}</div>
@@ -22,7 +21,10 @@
 
         <div class="container" id="answers_container">
             <p id="answers_list">Варианты ответов:</p>
-            <div id="end_answers" class="mb-3"></div>
+            <div id="end_answers" class="mb-3">
+                <input readonly name="answer_0"  class="form-control mb-2" value="Подписать">
+
+            </div>
         </div>
 
         <div class="container" id="participants_container">
@@ -35,18 +37,18 @@
         </div>
     </form>
 
-    <div class="mb-3">
-        <label for="answer" class="form-label mt-4">Добавить варианты ответов:</label>
-        <input type="text" class="form-control" id="answer" name="answer" aria-describedby="nameHelp">
-{{--        <div id="nameHelp" class="form-text">Какая то подсказка</div>--}}
-        <button id="add_answer" class="btn btn-secondary mt-3" style="color: orange;">Добавить</button>
-    </div>
+{{--    <div class="mb-3">--}}
+{{--        <label for="answer" class="form-label mt-4">Добавить варианты ответов:</label>--}}
+{{--        <input type="text" class="form-control" id="answer" name="answer" aria-describedby="nameHelp">--}}
+{{--        --}}{{--        <div id="nameHelp" class="form-text">Какая то подсказка</div>--}}
+{{--        <button id="add_answer" class="btn btn-secondary mt-3" style="color: orange;">Добавить</button>--}}
+{{--    </div>--}}
 
-    <div>
+    <div class="mt-3">
         <select class="form-select" id="select_user">
             <option selected disabled>Выберите участников</option>
             @foreach($users as $user)
-{{--                <option id="user{{ /** @var \App\Models\User $user */ $user->attributesToArray()['id'] }}">--}}
+                {{--                <option id="user{{ /** @var \App\Models\User $user */ $user->attributesToArray()['id'] }}">--}}
                 <option id="user{{ $user->id }}">
                     <p hidden>{{ $user->id }}</p> {{ $user }}
                 </option>
