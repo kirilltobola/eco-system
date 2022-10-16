@@ -7,7 +7,7 @@
 @section('content')
     <div class="row">
         <div class="col-sm-6">
-            <div class="card">
+            <div class="card mt-2">
                 <img src="https://imageio.forbes.com/specials-images/dam/imageserve/1063184564/960x0.jpg?format=jpg&width=960" height="300" class="card-img-top" alt="...">
                 <div class="card-body" style="background-color: #eee">
                     <h5 class="card-title">Голосование</h5>
@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="col-sm-6">
-            <div class="card">
+            <div class="card mt-2">
                 <img src="https://www.lansingcitypulse.com/uploads/original/20200320-134347-petition.jpg" height="300" class="card-img-top" alt="...">
                 <div class="card-body" style="background-color: #eee">
                     <h5 class="card-title">Петиция</h5>
