@@ -13,7 +13,7 @@
         @endif
 
         @foreach($votes as $vote)
-            <div class="card border-dark mb-3">
+            <div class="card text-center mb-3">
                 <div class="card-body text-dark">
                     <h5 class="card-title">
                         <a href="{{ route('votes.show', ['vote' => $vote->id]) }}">{{ $vote->thesis }}</a>
