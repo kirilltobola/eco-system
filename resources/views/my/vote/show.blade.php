@@ -5,11 +5,16 @@
 @endsection
 
 @section('content')
-    <div class="card border-dark mb-3">
-        <div class="card-header">{{ $vote->thesis }}</div>
-        <div class="card-body text-dark">
-            <form class="form-control" method="POST" action="{{ route('votes.vote', ['vote' => $vote->id]) }}">
+    <div class="container mb-3">
+{{--        <div class="card-header">{{ $vote->thesis }}</div>--}}
+{{--        <div class="card-body text-dark">--}}
+
+
+            <form class="form-control p-4" method="POST" action="{{ route('votes.vote', ['vote' => $vote->id]) }}">
                 @csrf
+
+                <h2 class="display-4">Тема: {{ $vote->thesis }}</h2>
+                <p class="lead">Варианты ответов:</p>
                 @if($selected_choice != null)
                     @foreach($vote->choices as $choice)
                         <div class="form-check">
@@ -31,7 +36,7 @@
                     @endforeach
                 @endif
 
-                <div class="mt-2">
+                <div class="mt-4">
                     <button class="btn btn-success" @if($selected_choice != null) disabled @endif type="submit">
                         Проголосовать
                     </button>
