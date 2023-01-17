@@ -15,7 +15,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
+
+        <!-- <div class="col-sm-6">
             <div class="card mt-2">
                 <img src="https://www.lansingcitypulse.com/uploads/original/20200320-134347-petition.jpg" height="300" class="card-img-top" alt="...">
                 <div class="card-body" style="background-color: #eee">
@@ -23,6 +24,6 @@
                     <a href="{{ route('petitions.index') }}" class="btn btn-primary">Выбрать</a>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 @endsection
