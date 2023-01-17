@@ -17,10 +17,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return view('my.index');
+})->name('home');
+
+Route::resources([
+    'kaizens' => KaizenController::class,
+]);
+
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', function () {
-        return redirect()->route('kaizens.index');
-    });
+    // Route::get('/', function () {
+    //     return redirect()->route('kaizens.index');
+    // });
 
     Route::get('/dashboard', function () {
         return view('dashboard');
@@ -38,7 +46,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/petitions', function () {
             /** @var \App\Models\Vote $petitions */
-//            $petitions = Auth::user()->votes()->where('type', '=', 'petition')->get();
+            // $petitions = Auth::user()->votes()->where('type', '=', 'petition')->get();
 
             $petitions = Auth::user()->votes()->where('type', '=', 'petition')->get();
             $my_petitions = Auth::user()->my_votes()->where('type', '=', 'petition')->get();
@@ -62,7 +70,7 @@ Route::middleware(['auth'])->group(function () {
 
         // seems wrong? or not?
         Route::resources([
-            'kaizens' => KaizenController::class,
+            //'kaizens' => KaizenController::class,
             'votes' => VoteController::class,
         ]);
 
