@@ -22,7 +22,7 @@
                 <img src="https://grans.hse.ru/data/2020/11/06/1362073056/3scale_1200.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">
-                        <a href="{{ route('kaizens.index', ['theme' => 'ecology']) }}">Цифровизация</a>
+                        <a href="{{ route('kaizens.index', ['theme' => 'digital']) }}">Цифровизация</a>
                     </h5>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                 <img src="https://hb.bizmrg.com/rostbk.com-backup/uf/94a/94adafbf15685082a45befaa14da9969/c864d21e3a77ae4ac344042122fa6457.png" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">
-                        <a href="{{ route('kaizens.index', ['theme' => 'ecology']) }}">Охрана Труда</a>
+                        <a href="{{ route('kaizens.index', ['theme' => 'ot']) }}">Охрана Труда</a>
                     </h5>
                 </div>
             </div>
