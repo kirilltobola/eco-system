@@ -39,6 +39,29 @@
             </div>
         </div>
 
+        <div class="col-sm-6">
+            <div class="card mt-2">
+                <img src="https://news.uchicago.edu/sites/default/files/styles/full_width/public/images/2019-07/Mobile%20voting.jpg?itok=oezMDWp-" class="card-img-top" alt="Голосование">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{{ route('votes.choose') }}">Голосование</a>
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+        @can('moderate projects')
+        <div class="col-sm-6">
+            <div class="card mt-2">
+                <img src="https://blog.ingate.ru/upload/medialibrary/480/1.png" class="card-img-top" alt="Модерацияы">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{{ route('moderation.index') }}">Модерация</a>
+                    </h5>
+                </div>
+            </div>
+        </div>
+        @endcan
     </div>
 
     <!-- <a class="navbar-brand" href="{{ route('kaizens.index', ['theme' => 'ecology']) }}">Экология</a>

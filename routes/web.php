@@ -68,9 +68,8 @@ Route::middleware(['auth'])->group(function () {
             );
         })->name('petitions.create');
 
-        // seems wrong? or not?
         Route::resources([
-            //'kaizens' => KaizenController::class,
+            // 'kaizens' => KaizenController::class,
             'votes' => VoteController::class,
         ]);
 
