@@ -10,13 +10,13 @@
             <a class="navbar-brand" href="{{ route('kaizens.index', ['theme' => 'digital']) }}">Цифровизация</a>
             <a class="navbar-brand" href="{{ route('kaizens.index', ['theme' => 'ot']) }}">ОТ</a> -->
 
-            <a class="navbar-brand" href="{{ route('votes.choose') }}">Голосование</a>
+            <!-- <a class="navbar-brand" href="{{ route('votes.choose') }}">Голосование</a> -->
 
 {{--            <a class="navbar-brand" href="{{ route('votes.index') }}">Голосование</a>--}}
 
-            @can('moderate projects')
+            <!-- @can('moderate projects')
                 <a class="navbar-brand" href="{{ route('moderation.index') }}">Модерация</a>
-            @endcan
+            @endcan -->
 
 
         </div>
